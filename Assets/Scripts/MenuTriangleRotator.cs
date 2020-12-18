@@ -16,7 +16,7 @@ public class MenuTriangleRotator : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(TurnSinPositive(0f));
+        StartCoroutine(TurnSinNegative(0f));
     }
 
     IEnumerator TurnSinPositive(float startDelay)
