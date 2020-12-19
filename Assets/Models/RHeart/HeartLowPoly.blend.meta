@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a5f5382b79821c34f810fbe50a43f69a
+guid: 303b49c3788678b4fadecf859ca723fe
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: defaultMat
+      name: Material.001
     second: {fileID: 2100000, guid: 26bf045823bd00046bab9d81c84efb01, type: 2}
   materials:
     materialImportMode: 1
@@ -41,7 +41,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
@@ -66,7 +66,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 0
+    normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
