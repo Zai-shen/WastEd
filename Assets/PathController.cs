@@ -21,7 +21,7 @@ public class PathController : MonoBehaviour
 
     public void NotifyTouched(GameObject caller)
     {
-        Debug.Log("I see you, " + caller.name +"!");
+        //Debug.Log("I see you, " + caller.name +"!");
 
         if (interactableButtons == null)
         {
@@ -39,7 +39,7 @@ public class PathController : MonoBehaviour
         switch (caller.name)
         {
             case "IBtnSupN":
-                Debug.Log("Understood, disabling IBtnSupE.");
+                //Debug.Log("Understood, disabling IBtnSupE.");
                 //Activate this symbol
                 symbols.transform.Find("Shield").gameObject
                     .GetComponentInChildren<Renderer>().material = openMaterial;
@@ -57,7 +57,7 @@ public class PathController : MonoBehaviour
                 }
                 break;
             case "IBtnSupE":
-                Debug.Log("Understood, disabling IBtnSupN.");
+                //Debug.Log("Understood, disabling IBtnSupN.");
                 //Activate this symbol
                 Component[] temp1 = symbols.transform.Find("SecondLife").gameObject
                     .GetComponentsInChildren<Renderer>();
@@ -75,7 +75,7 @@ public class PathController : MonoBehaviour
                     .GetComponentInChildren<Renderer>().material = closedMaterial;
                 break;
             case "IBtnSupS":
-                Debug.Log("Understood, disabling IBtnSupW.");
+                //Debug.Log("Understood, disabling IBtnSupW.");
                 //Activate this symbol
                 Component[] temp2 = symbols.transform.Find("DoubleJump").gameObject
                     .GetComponentsInChildren<Renderer>();
@@ -93,7 +93,7 @@ public class PathController : MonoBehaviour
                     .GetComponentInChildren<Renderer>().material = closedMaterial;
                 break;
             case "IBtnSupW":
-                Debug.Log("Understood, disabling IBtnSupS.");
+                //Debug.Log("Understood, disabling IBtnSupS.");
                 //Activate this symbol
                 symbols.transform.Find("Dash").gameObject
                     .GetComponentInChildren<Renderer>().material = openMaterial;
