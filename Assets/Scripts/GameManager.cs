@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void EndGame()
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restarting scene");
         Time.timeScale = 1f;
-        AudioListener.volume = AudioListener.volume = PlayerPrefs.GetFloat("Volume", 0);
+        AudioListener.volume = PlayerPrefs.GetFloat("Volume", 0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -87,20 +89,20 @@ public class GameManager : MonoBehaviour
             audioManager = AudioManager.Instance;
         }
 
-        Cursor.visible = false;
-
         switch (SceneManager.GetActiveScene().buildIndex)
         {
             case 0:
                 Debug.Log("Home");
                 Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 audioManager.StopAllSounds();
                 audioManager.PlayIfIsntAlreadyPlaying("Lvl0");
                 break;
             case 1:
+                Cursor.visible = false;
                 Debug.Log("Game");
-                audioManager.StopAllSoundsBut("Lvl2");
-                audioManager.PlayIfIsntAlreadyPlaying("Lvl2");
+                audioManager.StopAllSoundsBut("Lvl3");
+                audioManager.PlayIfIsntAlreadyPlaying("Lvl3");
                 break;
             default:
                 Debug.LogWarning("Unknown stage");

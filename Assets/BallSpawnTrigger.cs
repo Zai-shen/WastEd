@@ -6,6 +6,7 @@ public class BallSpawnTrigger : MonoBehaviour
 {
     public GameObject[] ballsToSpawn;
     public float destroyDelay = 10f;
+    public bool triggered = false;
 
     // Start is called before the first frame update
     void Start()
@@ -15,8 +16,9 @@ public class BallSpawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !triggered)
         {
+            triggered = true;
             foreach (GameObject ball in ballsToSpawn)
             {
                 ball.SetActive(true);

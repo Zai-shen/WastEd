@@ -19,7 +19,7 @@ public class OnCollisionSpawnPickUp : MonoBehaviour
         {
             Debug.Log("Playercollision");
             //SpawnPickup
-            Instantiate(pickUpToSpawn, transform.parent.transform.parent.transform.position + new Vector3(2f,1f,0), Quaternion.Euler(rotationPickUp));
+            Instantiate(pickUpToSpawn, transform.parent.transform.parent.transform.position + new Vector3(1f,1f,0), Quaternion.Euler(rotationPickUp));
             Destroy(this.gameObject);
         }
     }
