@@ -31,6 +31,7 @@ public class PlayerCollisionHandler : MonoBehaviour
             //Play sound
             audioManager.Play("PlayerCrashed");
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +59,12 @@ public class PlayerCollisionHandler : MonoBehaviour
             transform.GetComponent<Jump>().ableToDoubleJump = true;
             Destroy(other.gameObject);
             audioManager.Play("PlayerLost");
+        }
+        else if (other.CompareTag("FallingEndless"))
+        {
+            pHPHandler.TakeDamage(100f);
+            //Play sound
+            audioManager.Play("PlayerCrashed");
         }
     }
 
