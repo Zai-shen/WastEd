@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("GAME OVER");
             gameIsOver = true;
 
-            audioManager.Play("PlayerLost");
+            audioManager.Play("Gong");
             failLevelUI.SetActive(true);
             StartCoroutine(ShowRetryCanvas(restartDelay));
             AudioListener.volume = PlayerPrefs.GetFloat("Volume", 0) / 2;
@@ -96,13 +96,13 @@ public class GameManager : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 audioManager.StopAllSounds();
-                audioManager.PlayIfIsntAlreadyPlaying("Lvl0");
+                audioManager.PlayIfIsntAlreadyPlaying("Home");
                 break;
             case 1:
                 Cursor.visible = false;
                 Debug.Log("Game");
-                audioManager.StopAllSoundsBut("Lvl3");
-                audioManager.PlayIfIsntAlreadyPlaying("Lvl3");
+                audioManager.StopAllSoundsBut("Game");
+                audioManager.PlayIfIsntAlreadyPlaying("Game");
                 break;
             default:
                 Debug.LogWarning("Unknown stage");

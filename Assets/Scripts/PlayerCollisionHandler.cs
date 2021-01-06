@@ -40,25 +40,25 @@ public class PlayerCollisionHandler : MonoBehaviour
         {
             fpsMovement.ableToShield = true;
             Destroy(other.gameObject);
-            audioManager.Play("PlayerLost");
+            audioManager.Play("Gong");
         }
         else if (other.CompareTag("PowerUpSecondLife"))
         {
             transform.GetComponent<PlayerHPHandler>().PowerUpSecondLife();
             Destroy(other.gameObject);
-            audioManager.Play("PlayerLost");
+            audioManager.Play("Gong");
         }
         else if (other.CompareTag("PowerUpDash"))
         {
             fpsMovement.ableToDash = true;
             Destroy(other.gameObject);
-            audioManager.Play("PlayerLost");
+            audioManager.Play("Gong");
         }
         else if (other.CompareTag("PowerUpDoubleJump"))
         {
             transform.GetComponent<Jump>().ableToDoubleJump = true;
             Destroy(other.gameObject);
-            audioManager.Play("PlayerLost");
+            audioManager.Play("Gong");
         }
         else if (other.CompareTag("FallingEndless"))
         {

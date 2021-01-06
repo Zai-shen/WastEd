@@ -47,6 +47,19 @@ public class AudioManager : MonoBehaviour
         snd.source.Play();
     }
 
+    public void PlayAtLocation(string name, Vector3 pos)
+    {
+        Sound snd = Array.Find(sounds, sound => sound.name == name);
+
+        if (snd == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+        
+        AudioSource.PlayClipAtPoint(snd.clip, pos);
+    }
+
     public void PlayWithRandomizedPitch(string name)
     {
         Sound snd = Array.Find(sounds, sound => sound.name == name);
@@ -68,6 +81,18 @@ public class AudioManager : MonoBehaviour
         
         if (!snd.source.isPlaying) {
             Play(name);
+        }
+    }
+
+    //Doesnt work - just why
+    public void Stop(string name)
+    {
+        foreach (Sound playingSnd in sounds)
+        {
+            if (playingSnd.name == name)
+            {
+                playingSnd.source.Stop();
+            }
         }
     }
 
