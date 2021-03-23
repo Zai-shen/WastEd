@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHPHandler : MonoBehaviour
+public class PlayerHPHandler : Character
 {
-    public float healthPoints = 1f;
-    public bool dead = false;
     public bool shielded = false;
 
     private GameManager gameManager;
@@ -17,7 +15,7 @@ public class PlayerHPHandler : MonoBehaviour
         //display hp        
     }
 
-    public void TakeDamage(float dmg)
+    public new void TakeDamage(float dmg)
     {
         if (shielded)
         {
@@ -32,7 +30,8 @@ public class PlayerHPHandler : MonoBehaviour
         {
             dead = true;
             //Handle death
-            Debug.Log("I am dying now, oh noes");
+            Debug.Log("I am dying now, oh noes! At:");
+            LogPosition();
 
 
             //Display fade on screen
@@ -63,11 +62,5 @@ public class PlayerHPHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         gameManager.LoadMenu();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

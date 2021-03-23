@@ -15,10 +15,6 @@ public class ProjectileLauncher : MonoBehaviour
     [Tooltip("Prefab of the projectile to be initialised and shot.")]
     public GameObject projectile;
 
-    [Tooltip("Rate of fire - in seconds.")]
-    [Range(0.1f, 5f)]
-    public float fireRate = 1.5f;
-
     [Tooltip("Use min/max angles for trajectory calculation. Else use maximum height.")]
     public bool useAngles = true;
 
@@ -43,19 +39,11 @@ public class ProjectileLauncher : MonoBehaviour
 
     #endregion
 
-    private float nextFireTime = 0f;
-
     private const float angleIncrement = 5f;
     private const int gizmoResolution = 30;
 
     private void Update()
     {
-        if (Time.time > nextFireTime)
-        {
-            nextFireTime = Time.time + fireRate;
-            Launch();
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             DestroyLaunchedProjectiles();
@@ -66,12 +54,17 @@ public class ProjectileLauncher : MonoBehaviour
     {
         if (TargetIsReachable())
         {
-            GameObject p = Instantiate(projectile, transform.position, transform.rotation);
+            GameObject p = Instantiate(projectile, transform.position, projectile.transform.rotation);
             launchedProjectiles.Add(p);
 
             Rigidbody pRB = p.GetComponent<Rigidbody>();
             pRB.useGravity = true;
             pRB.velocity = CalcLaunchData(minAngle).initialVelocity;
+            pRB.angularVelocity = new Vector3(0f,Random.Range(-5f,5f),Random.Range(0.5f,2f));
+        }
+        else
+        {
+            Debug.Log("Not reachable!");
         }
     }
 
@@ -113,6 +106,9 @@ public class ProjectileLauncher : MonoBehaviour
             result *= Mathf.Rad2Deg;
         }
 
+        Debug.Log("xangle: " + result.x);
+        Debug.Log("yangle: " + result.y);
+
         return result;
     }
 
@@ -140,12 +136,17 @@ public class ProjectileLauncher : MonoBehaviour
                 }
             }
 
-            float initialVelocity = Mathf.Sqrt(initialVelocitySquared);
+            float initialVelocity = Mathf.Sqrt(Mathf.Abs(initialVelocitySquared));
             float xVelocity = initialVelocity * angleCos;
             float yVelocity = initialVelocity * angleSin;
             float flightTime = xDist / xVelocity;
             float zVelocity = zDist / flightTime;
             Vector3 velocities = new Vector3(xVelocity, yVelocity, zVelocity);
+
+            Debug.Log("ivsq " + initialVelocitySquared);
+            Debug.Log("iv " + initialVelocity);
+            //Debug.Log("ft " + flightTime);
+            Debug.Log(velocities.x + " x y " + velocities.y + " z " + velocities.z);
 
             return new LaunchData(velocities, flightTime);
         }
@@ -160,10 +161,19 @@ public class ProjectileLauncher : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos() //Selected()
     {
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        else
+        {
+            return;
+        }
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, target.position.x - transform.position.x);
+        Gizmos.DrawWireSphere(this.transform.position, target.position.x - this.transform.position.x);
         Gizmos.color = Color.blue;
 
         if (useAngles)
@@ -178,6 +188,11 @@ public class ProjectileLauncher : MonoBehaviour
         else
         {
             Gizmos.DrawWireCube(this.transform.position, new Vector3(target.position.x - transform.position.x, maxHeightAboveLauncher + transform.position.y, target.position.z - transform.position.z) * 2);
+        }
+
+        if (useAngles && !TargetIsReachable())
+        {
+            return;
         }
 
         LaunchData launchData = CalcLaunchData(minAngle);
