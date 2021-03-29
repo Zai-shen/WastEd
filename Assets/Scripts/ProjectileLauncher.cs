@@ -163,17 +163,19 @@ public class ProjectileLauncher : MonoBehaviour
 
     void OnDrawGizmos() //Selected()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null)
-        {
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-        else
+        if (target == null)
         {
             return;
         }
+        //if (GameObject.FindGameObjectWithTag("Player") != null)
+        //{
+        //    target = GameObject.FindGameObjectWithTag("Player").transform;
+        //}
+        //else
+        //{
+        //    return;
+        //}
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, target.position.x - this.transform.position.x);
         Gizmos.color = Color.blue;
 
         if (useAngles)
@@ -183,11 +185,13 @@ public class ProjectileLauncher : MonoBehaviour
                 * Mathf.Pow(Mathf.Sin(maxAngle * Mathf.Deg2Rad), 2)
                 / (-2 * Physics.gravity.y);
 
-            Gizmos.DrawWireCube(this.transform.position, new Vector3(target.position.x - transform.position.x, maxHeight, target.position.z - transform.position.z) * 2);
+            Gizmos.DrawLine(new Vector3(this.transform.position.x, maxHeight, this.transform.position.z),
+                new Vector3(target.position.x, maxHeight, target.position.z));
         }
         else
         {
-            Gizmos.DrawWireCube(this.transform.position, new Vector3(target.position.x - transform.position.x, maxHeightAboveLauncher + transform.position.y, target.position.z - transform.position.z) * 2);
+            Gizmos.DrawLine(new Vector3(this.transform.position.x, this.transform.position.y + maxHeightAboveLauncher, this.transform.position.z),
+                new Vector3(target.position.x, this.transform.position.y + maxHeightAboveLauncher, target.position.z));
         }
 
         if (useAngles && !TargetIsReachable())
