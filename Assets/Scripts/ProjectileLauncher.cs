@@ -143,11 +143,6 @@ public class ProjectileLauncher : MonoBehaviour
             float zVelocity = zDist / flightTime;
             Vector3 velocities = new Vector3(xVelocity, yVelocity, zVelocity);
 
-            Debug.Log("ivsq " + initialVelocitySquared);
-            Debug.Log("iv " + initialVelocity);
-            //Debug.Log("ft " + flightTime);
-            Debug.Log(velocities.x + " x y " + velocities.y + " z " + velocities.z);
-
             return new LaunchData(velocities, flightTime);
         }
         else
@@ -161,20 +156,12 @@ public class ProjectileLauncher : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos() //Selected()
+    void OnDrawGizmosSelected()
     {
         if (target == null)
         {
             return;
         }
-        //if (GameObject.FindGameObjectWithTag("Player") != null)
-        //{
-        //    target = GameObject.FindGameObjectWithTag("Player").transform;
-        //}
-        //else
-        //{
-        //    return;
-        //}
 
         Gizmos.color = Color.blue;
 

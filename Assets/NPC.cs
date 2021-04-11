@@ -8,7 +8,7 @@ using UnityEngine;
 public class NPC : Character
 {
 
-    public new void TakeDamage(float dmg)
+    public new bool TryTakeDamage(float dmg)
     {
         healthPoints -= dmg;
 
@@ -17,5 +17,7 @@ public class NPC : Character
             dead = true;
             Destroy(this.gameObject);
         }
+
+        return true;
     }
 }

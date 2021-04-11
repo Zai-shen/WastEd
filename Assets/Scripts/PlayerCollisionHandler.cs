@@ -20,18 +20,19 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Spike"))
         {
-            pHPHandler.TakeDamage(1f);
-            //Play sound
+            if(pHPHandler.TryTakeDamage(1f))
             audioManager.Play("PlayerCrashed");
-
         }
         else if (collision.gameObject.CompareTag("Ball"))
         {
-            pHPHandler.TakeDamage(1f);
-            //Play sound
+            if(pHPHandler.TryTakeDamage(1f))
             audioManager.Play("PlayerCrashed");
         }
-
+        else if (collision.gameObject.CompareTag("BananaPeel"))
+        {
+            if(pHPHandler.TryTakeDamage(0.5f))
+            audioManager.Play("PlayerCrashed");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,8 +63,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         }
         else if (other.CompareTag("FallingEndless"))
         {
-            pHPHandler.TakeDamage(100f);
-            //Play sound
+            if(pHPHandler.TryTakeDamage(100f))
             audioManager.Play("PlayerCrashed");
         }
     }

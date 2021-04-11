@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// Archer which launches projectiles at player.
 /// </summary>
-[RequireComponent(typeof(ProjectileLauncher))]
 public class Archer : NPC
 {
     #region Unity Inspector Fields
@@ -25,13 +24,11 @@ public class Archer : NPC
 
     private float nextFireTime = 0f;
     private ProjectileLauncher projLauncher;
-    private Transform parentTf;
 
     // Start is called before the first frame update
     void Start()
     {
-        parentTf = this.gameObject.transform.root.transform;
-        projLauncher = GetComponent<ProjectileLauncher>();
+        projLauncher = GetComponentInChildren<ProjectileLauncher>();
 
         projLauncher.target = target.transform;
     }
@@ -62,16 +59,15 @@ public class Archer : NPC
 
     private void TurnToTarget()
     {
-        parentTf.LookAt(new Vector3(target.transform.position.x, 0, target.transform.position.z));
+        transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
     }
 
-    void OnDrawGizmos() //Selected()
+    void OnDrawGizmos()
     {
         Color redTransparent = new Color();
         redTransparent.r = 1f;
-
-        //Gizmos.color = Color.red;
         redTransparent.a = 0.2f;
+
         Gizmos.color = redTransparent;
         Gizmos.DrawSphere(this.transform.position, reach);
     }

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    [SerializeField]
     protected float healthPoints = 1f;
+    [SerializeField]
     protected bool dead;
 
-    public void TakeDamage(float dmg)
+    public bool TryTakeDamage(float dmg)
     {
         healthPoints -= dmg;
 
@@ -15,6 +17,8 @@ public class Character : MonoBehaviour
         {
             dead = true;
         }
+
+        return true;
     }
 
     public void LogPosition()

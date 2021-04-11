@@ -54,6 +54,10 @@ public class FirstPersonMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Currently sets the transform - which allows for precise control. Though it is possible to clip through walls/etc.
+    /// TODO: make as addForce() and for the duration eliminate friction.
+    /// </summary>
     IEnumerator Dash()
     {
         Vector3 a = transform.position;

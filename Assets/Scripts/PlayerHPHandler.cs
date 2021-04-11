@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerHPHandler : Character
 {
     public bool shielded = false;
+    public float damageImmunityCooldown = 1f;
+    private float timeSinceLastDamage = 0f;
 
     private GameManager gameManager;
 
@@ -15,15 +17,22 @@ public class PlayerHPHandler : Character
         //display hp        
     }
 
-    public new void TakeDamage(float dmg)
+    public new bool TryTakeDamage(float dmg)
     {
+        bool tookDamage = false;
+
         if (shielded)
         {
-            return;
+            return tookDamage;
         }
         else
         {
-            healthPoints -= dmg;
+            if (damageImmunityCooldown + timeSinceLastDamage < Time.time)
+            {
+                healthPoints -= dmg;
+                timeSinceLastDamage = Time.time;
+                tookDamage = true;
+            }
         }
 
         if (healthPoints <= 0 && !dead)
@@ -40,8 +49,10 @@ public class PlayerHPHandler : Character
             //Debug.Log("rotation:" + this.transform.rotation);
 
             //Return to main menu scene
-            StartCoroutine(WaitAndLoadMenu(1f));
+            StartCoroutine(WaitAndLoadMenu(0.75f));
         }
+
+        return tookDamage;
     }
 
     public void PowerUpSecondLife()
