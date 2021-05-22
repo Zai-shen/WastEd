@@ -12,6 +12,7 @@ TagManager:
   - PowerUpDoubleJump
   - FallingEndless
   - BananaPeel
+  - StartingArea
   layers:
   - Default
   - TransparentFX

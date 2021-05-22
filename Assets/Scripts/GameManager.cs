@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public GameObject failLevelUI;
     public GameObject retryCanvas;
 
+    private int pickUpsFound = 0;
+    public int pickUpsNeeded = 2;
+
     public void LoadNextLevel()
     {
         Time.timeScale = 1f;
@@ -121,6 +124,31 @@ public class GameManager : MonoBehaviour
         gameIsPaused = false;
     }
 
+    public bool TryEnableEndgame()
+    {
+        pickUpsFound += 1;
+        if (pickUpsFound == pickUpsNeeded)
+        {
+            EnableEndgame();
+            return true;
+        }
+        return false;
+    }
+
+    private void EnableEndgame()
+    {
+        //Disable objects
+        GameObject.Find("OuterBoundsKillUpper").gameObject.SetActive(false);
+
+        GameObject startArea = GameObject.FindGameObjectWithTag("StartingArea").gameObject;
+        startArea.transform.Find("Base").gameObject.SetActive(false);
+        startArea.transform.Find("Path Buttons").gameObject.SetActive(false);
+        startArea.transform.Find("InteractableButtons").gameObject.SetActive(false);
+
+        //Enable objects
+        startArea.transform.Find("TunnelBaseLate").gameObject.SetActive(true);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -129,6 +157,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Restarting level");
             Restart();
         }
+
 #if UNITY_EDITOR
         if (Input.GetKey("l"))
             {

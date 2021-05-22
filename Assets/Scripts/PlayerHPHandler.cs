@@ -14,7 +14,7 @@ public class PlayerHPHandler : Character
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        //display hp        
+        ///TODO: display hp        
     }
 
     public new bool TryTakeDamage(float dmg)
@@ -35,13 +35,26 @@ public class PlayerHPHandler : Character
             }
         }
 
+        CheckForDeath();
+
+        return tookDamage;
+    }
+
+    public void ForceTakeDamage(float dmg)
+    {
+        healthPoints -= dmg;
+        timeSinceLastDamage = Time.time;
+        CheckForDeath();
+    }
+
+    private void CheckForDeath()
+    {
         if (healthPoints <= 0 && !dead)
         {
             dead = true;
             //Handle death
             Debug.Log("I am dying now, oh noes! At:");
             LogPosition();
-
 
             //Display fade on screen
             //Debug.Log("rotation:" + this.transform.rotation.to);
@@ -51,8 +64,6 @@ public class PlayerHPHandler : Character
             //Return to main menu scene
             StartCoroutine(WaitAndLoadMenu(0.75f));
         }
-
-        return tookDamage;
     }
 
     public void PowerUpSecondLife()

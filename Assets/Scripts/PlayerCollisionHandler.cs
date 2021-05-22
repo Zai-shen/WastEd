@@ -7,6 +7,7 @@ public class PlayerCollisionHandler : MonoBehaviour
     private FirstPersonMovement fpsMovement;
     private PlayerHPHandler pHPHandler;
     private AudioManager audioManager;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         fpsMovement = GetComponent<FirstPersonMovement>();
         pHPHandler = GetComponent<PlayerHPHandler>();
         audioManager = AudioManager.Instance;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -40,32 +42,35 @@ public class PlayerCollisionHandler : MonoBehaviour
         if (other.CompareTag("PowerUpShield"))
         {
             fpsMovement.ableToShield = true;
-            Destroy(other.gameObject);
-            audioManager.Play("Gong");
+            HandlePowerUp(other);
         }
         else if (other.CompareTag("PowerUpSecondLife"))
         {
             transform.GetComponent<PlayerHPHandler>().PowerUpSecondLife();
-            Destroy(other.gameObject);
-            audioManager.Play("Gong");
+            HandlePowerUp(other);
         }
         else if (other.CompareTag("PowerUpDash"))
         {
             fpsMovement.ableToDash = true;
-            Destroy(other.gameObject);
-            audioManager.Play("Gong");
+            HandlePowerUp(other);
         }
         else if (other.CompareTag("PowerUpDoubleJump"))
         {
             transform.GetComponent<Jump>().ableToDoubleJump = true;
-            Destroy(other.gameObject);
-            audioManager.Play("Gong");
+            HandlePowerUp(other);
         }
         else if (other.CompareTag("FallingEndless"))
         {
-            if(pHPHandler.TryTakeDamage(100f))
+            pHPHandler.ForceTakeDamage(100f);
             audioManager.Play("PlayerCrashed");
         }
+    }
+
+    private void HandlePowerUp(Collider other)
+    {
+        Destroy(other.gameObject);
+        audioManager.Play("Gong");
+        gameManager.TryEnableEndgame();
     }
 
 }
