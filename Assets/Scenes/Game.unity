@@ -16351,6 +16351,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114963311885979670, guid: 11aaea5348574644a9eb4f4504fcce3f,
+        type: 3}
+      propertyPath: dashCD
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114963311885979670, guid: 11aaea5348574644a9eb4f4504fcce3f,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 880401881046355456, guid: 11aaea5348574644a9eb4f4504fcce3f,
         type: 3}
       propertyPath: healthPoints
@@ -91749,8 +91759,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808714158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6, y: -5, z: -10}
-  m_LocalScale: {x: 380, y: 2, z: 300}
+  m_LocalPosition: {x: 2.6, y: -15, z: -10}
+  m_LocalScale: {x: 380, y: 10, z: 300}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
