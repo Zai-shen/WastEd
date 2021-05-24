@@ -19,8 +19,6 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        Debug.Log("Pausing game for menu");
-
         AudioListener.volume = PlayerPrefs.GetFloat("Volume", 0) / 2;
 
         playerLook.GetComponent<FirstPersonLook>().enabled = false; 
@@ -32,8 +30,6 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("Resuming game from menu");
-
         AudioListener.volume = PlayerPrefs.GetFloat("Volume", 0);
 
         playerLook.GetComponent<FirstPersonLook>().enabled = true;
@@ -49,12 +45,10 @@ public class PauseMenu : MonoBehaviour
         {
             if (gameManager.GameIsPaused)
             {
-                Debug.Log("Resuming");
                 Resume();
             }
             else
             {
-                Debug.Log("Pausing");
                 Pause();
             }
         }

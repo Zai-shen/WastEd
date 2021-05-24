@@ -42,12 +42,9 @@ public class ProjectileLauncher : MonoBehaviour
     private const float angleIncrement = 5f;
     private const int gizmoResolution = 30;
 
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            DestroyLaunchedProjectiles();
-        }
+        DestroyLaunchedProjectiles();
     }
 
     public void Launch()
@@ -64,7 +61,7 @@ public class ProjectileLauncher : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not reachable!");
+            //Debug.Log("Not reachable!");
         }
     }
 
@@ -106,8 +103,8 @@ public class ProjectileLauncher : MonoBehaviour
             result *= Mathf.Rad2Deg;
         }
 
-        Debug.Log("xangle: " + result.x);
-        Debug.Log("yangle: " + result.y);
+        //Debug.Log("xangle: " + result.x);
+        //Debug.Log("yangle: " + result.y);
 
         return result;
     }

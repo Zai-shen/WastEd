@@ -35,6 +35,11 @@ public class PlayerCollisionHandler : MonoBehaviour
             if(pHPHandler.TryTakeDamage(0.5f))
             audioManager.Play("PlayerCrashed");
         }
+        else if (collision.gameObject.CompareTag("BananaPeelBig"))
+        {
+            if (pHPHandler.TryTakeDamage(1f))
+                audioManager.Play("PlayerCrashed");
+        }
     }
 
     private void OnTriggerEnter(Collider other)

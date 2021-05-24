@@ -8,7 +8,7 @@ public class OnCollisionChangeMaterial : MonoBehaviour
     public Material openMaterial;
     public Material closedMaterial;
     public string state = "idle";
-    public AudioManager audioManager;
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +25,17 @@ public class OnCollisionChangeMaterial : MonoBehaviour
             //Debug.Log("Changing state!");
             GetComponent<Renderer>().material = openMaterial;
             state = "open";
-            // notify superior
             audioManager.PlayAtLocation("PathActivated", this.transform.position);
-            transform.root.GetComponent<PathController>().NotifyTouched(this.transform.parent.gameObject);
+            // notify superior
+            if (this.transform.parent.gameObject.name.StartsWith("IBtnSup"))
+            {
+                transform.root.GetComponent<PathController>().NotifyTouched(this.transform.parent.gameObject);
+            }
+            else
+            {
+                this.transform.GetComponentInParent<BossMechanics>().NotifyTouched(this.name);
+                //this.transform.parent.gameObject.GetComponent<BossMechanics>().NotifyTouched(this.name);
+            }
         }
         else if (collision.gameObject.CompareTag("Player") && state.Equals("closed"))
         {
@@ -39,11 +47,5 @@ public class OnCollisionChangeMaterial : MonoBehaviour
     {
         this.GetComponent<Renderer>().material = closedMaterial;
         state = "closed";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
