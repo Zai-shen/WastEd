@@ -4,6 +4,10 @@ public class Jump : MonoBehaviour
 {
     [SerializeField]
     GroundCheck groundCheck;
+
+    [SerializeField]
+    AudioSource jump, jumpDouble;
+
     new Rigidbody rigidbody;
     public float jumpStrength = 2;
     public event System.Action Jumped;
@@ -32,12 +36,14 @@ public class Jump : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && groundCheck.isGrounded)
         {
+            jump.Play();
             rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();
         }
         else if (Input.GetButtonDown("Jump") && mayDoubleJump)
         {
             mayDoubleJump = false;
+            jumpDouble.Play();
             rigidbody.velocity = new Vector3(rigidbody.velocity.x,0,rigidbody.velocity.z);
             rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
             Jumped?.Invoke();

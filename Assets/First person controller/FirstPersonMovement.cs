@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class FirstPersonMovement : MonoBehaviour
 {
+    [SerializeField]
+    GroundCheck groundCheck;
+
+    [SerializeField]
+    AudioSource footStep;
+
     private bool ableToMove = true;
     public float speed = 5;
 
@@ -25,10 +31,14 @@ public class FirstPersonMovement : MonoBehaviour
 
     private PlayerHPHandler pHPHandler;
 
+    private float stepDelay = 0.2f;
+    private float timeSinceLastStep = 1f;
+
     private void Start()
     {
-        pHPHandler = GetComponent<PlayerHPHandler>();
         rb = GetComponent<Rigidbody>();
+        pHPHandler = GetComponent<PlayerHPHandler>();
+        footStep = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -38,7 +48,17 @@ public class FirstPersonMovement : MonoBehaviour
             velocity.y = Input.GetAxis("Vertical") * speed * Time.deltaTime;
             velocity.x = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
             transform.Translate(velocity.x, 0, velocity.y);
+            if ((velocity.x != 0 || velocity.y != 0) && timeSinceLastStep >= stepDelay && groundCheck.isGrounded)
+            {
+                timeSinceLastStep -= stepDelay; 
+                if (!footStep.isPlaying)
+                {
+                    footStep.pitch = Random.Range(1.1f,1.3f);
+                    footStep.Play();
+                }
+            }
         }
+        timeSinceLastStep += Time.fixedDeltaTime;
     }
 
     private void Update()
@@ -60,26 +80,6 @@ public class FirstPersonMovement : MonoBehaviour
             nextDashTime = Time.time + dashCD;
         }
     }
-
-    /// <summary>
-    /// Currently sets the transform - which allows for precise control. Though it is possible to clip through walls/etc.
-    /// TODO: make as addForce() and for the duration eliminate friction.
-    /// </summary>
-    //IEnumerator DashLegacy()
-    //{
-    //    Vector3 a = transform.position;
-    //    Vector3 b = new Vector3(transform.position.x, transform.position.y, transform.position.z) + transform.forward * dashDistance;
-
-    //    float step = (dashSpeed / (a - b).magnitude) * Time.fixedDeltaTime;
-    //    float t = 0;
-    //    while (t <= 1)
-    //    {
-    //        t += step; // Goes from 0 to 1, incrementing by step each time
-    //        transform.position = Vector3.Lerp(a, b, t); // Move objectToMove closer to b
-    //        yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
-    //    }
-    //    transform.position = b;
-    //}
 
     IEnumerator Dash()
     {

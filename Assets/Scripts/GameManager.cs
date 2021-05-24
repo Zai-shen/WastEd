@@ -107,6 +107,13 @@ public class GameManager : MonoBehaviour
                 audioManager.StopAllSoundsBut("Game");
                 audioManager.PlayIfIsntAlreadyPlaying("Game");
                 break;
+            case 2:
+                Debug.Log("Credits");
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                audioManager.StopAllSounds();
+                audioManager.PlayIfIsntAlreadyPlaying("Home");
+                break;
             default:
                 Debug.LogWarning("Unknown stage");
                 break;
